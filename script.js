@@ -1,95 +1,51 @@
-(function () {
-    "use strict";
-  
-    const items = [
-      "7️⃣",
-      "❌",
-      "🍓",
-      "🍋",
-      "🍉",
-      "🍒",
-      "💵",
-      "🍊",
-      "🍎"
-    ];
-    
-    document.querySelector(".info").textContent = items.join(" ");
-    
-    const doors = document.querySelectorAll(".door");
-    document.querySelector("#spinner").addEventListener("click", spin);
-    document.querySelector("#reseter").addEventListener("click", init);
-    
-    async function spin() {
-      init(false, 1, 2);
-      for (const door of doors) {
-        const boxes = door.querySelector(".boxes");
-        const duration = parseInt(boxes.style.transitionDuration) * 1000; // Convert to milliseconds
-        boxes.style.transform = "translateY(0)";
-        await new Promise((resolve) => setTimeout(resolve, duration));
-      }
+const fruits = [
+    "🍎", "🍌", "🍊", "🍉", "🍓",
+    "🍇", "🍍", "🥭", "🍒", "🍑"
+];
+
+const resetEmoji = "❌"
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+document.getElementById("spin-button").addEventListener("click", spin) //tukaj sem nastavil listenerja ki poslusa kdaj je ghumb kliknjen
+
+document.getElementById("reset-button").addEventListener("click", reset)
+
+function spin() {
+    let spin1 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
+    document.getElementById("spinner1").innerHTML = spin1
+
+    let spin2 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
+    document.getElementById("spinner2").innerHTML = spin2
+
+    let spin3 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
+    document.getElementById("spinner3").innerHTML = spin3
+
+    //  let seznamDobitkov = [spin1, spin2, spin3]
+
+    if (spin1 === spin2 && spin2 === spin3) {                    //preverja ce so veriabli enaki
+        console.log("Vse tri spremenljivke so enake.");
+        document.getElementById("rezultat-box").innerHTML = "Vse tri spremenljivke so enake."
+    } else if (spin1 === spin2 || spin1 === spin3 || spin2 === spin3) {
+        console.log("Dve spremenljivki sta enaki.");
+        document.getElementById("rezultat-box").innerHTML = "Dve spremenljivki sta enaki."
+    } else {
+        console.log("Nobeni dve spremenljivki nista enaki.");
+        document.getElementById("rezultat-box").innerHTML = "Nobeni dve spremenljivki nista enaki."
     }
-  
-    function init(firstInit = true, groups = 1, duration = 1) {
-      for (const door of doors) {
-        if (firstInit) {
-          door.dataset.spinned = "0"; // Reset the spin status on initialization
-        } else if (door.dataset.spinned === "1") {
-          return; // If the door has already spun, skip initialization
-        }
-  
-        const boxes = door.querySelector(".boxes");
-        const boxesClone = boxes.cloneNode(false);
-        const pool = ["❓"]; // Start with a default "question mark"
-  
-        if (!firstInit) {
-          const arr = [];
-          for (let n = 0; n < groups; n++) {
-            arr.push(...items);
-          }
-          pool.push(...shuffle(arr)); // Shuffle items to create random order
-        }
-  
-        boxesClone.addEventListener("transitionstart", function () {
-          door.dataset.spinned = "1"; // Mark the door as spun
-          this.querySelectorAll(".box").forEach((box) => {
-            box.style.filter = "blur(1px)"; // Add blur effect to the boxes
-          });
-        }, { once: true });
-  
-        boxesClone.addEventListener("transitionend", function () {
-          this.querySelectorAll(".box").forEach((box, index) => {
-            box.style.filter = "blur(0)"; // Remove blur effect after transition
-            if (index > 0) this.removeChild(box); // Remove extra boxes
-          });
-        }, { once: true });
-  
-        // Create new boxes based on the pool of items
-        for (let i = pool.length - 1; i >= 0; i--) {
-          const box = document.createElement("div");
-          box.classList.add("box");
-          box.style.width = door.clientWidth + "px";
-          box.style.height = door.clientHeight + "px";
-          box.textContent = pool[i];
-          boxesClone.appendChild(box);
-        }
-  
-        boxesClone.style.transitionDuration = `${duration > 0 ? duration : 1}s`;
-        boxesClone.style.transform = `translateY(-${door.clientHeight * (pool.length - 1)}px)`;
-        door.replaceChild(boxesClone, boxes); // Replace the old boxes with the new ones
-      }
-    }
-  
-    // Shuffle function for randomizing the pool
-    function shuffle(arr) {
-      let m = arr.length;
-      while (m) {
-        const i = Math.floor(Math.random() * m--);
-        [arr[m], arr[i]] = [arr[i], arr[m]];
-      }
-      return arr;
-    }
-  
-    // Initial setup of the doors
-    init();
-  })();
-  
+
+
+
+
+    console.log("spinner")
+}
+
+function reset() {
+    document.getElementById("spinner1").innerHTML = resetEmoji
+
+    document.getElementById("spinner2").innerHTML = resetEmoji
+
+    document.getElementById("spinner3").innerHTML = resetEmoji
+}
