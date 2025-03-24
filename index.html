@@ -4,48 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino</title>
+    <title>LESJAK Casinos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <img src="pictures/smallest_logo.jpg" alt="logo-big" id = "logo-big">
+        <button onclick="window.location.href='black-jack.html'" id="button-prva-izbira">Black Jack</button>
+
     </header>
 
     <main>
-        <div id="rezultat-box">
-
-        </div>
-        <div id="spin-box">
-            <div class="spinner" id="spinner1">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner2">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner3">
-                <span>❌</span>
+        <div>
+            <h1>WELCOME TO LESJAK CASINO!</h1>
+            <h2>CHOOSE A GAME:</h2>
+            <div id="main-button-container">
+                <button onclick="window.location.href='black-jack.html'" id="index-button-black-jack">Black Jack</button>
+                <button onclick="window.location.href='slot.html'" id="index-button-slot-machine">Slot machine</button>
             </div>
         </div>
-        <div id="button-box">
-            <button id="spin-button">
-                Spin
-            </button>
-            <!-- 
-            <button id="reset-button">
-                Reset
-            </button> 
-            -->
-            
-        </div>
-        <span id="test">
-
-        </span>
+        
     </main>
     <footer>
-        
-    </footer>
+        <div id="sponzorji-footer-box">
+            <h3 id="napis-sponzorji">Sodelovanja:</h3>
+            <img src="pictures/nicehash_logo_sponzorji.jpg" alt="nicehash-logo-sponzorji" id = "nicehash-logo-sponzorji">
+            <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="bitcoin-logo-sponzorji" id = "bitcoin-logo-sponzorji">
+            <img src="pictures/Nova_Ljubljanska_banka_logo.svg.png" alt="nova-ljubljanska-banka-sponzorji" id = "nova-ljubljanska-banka-sponzorji">
+        </div>
+        </footer>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>

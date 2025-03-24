@@ -1,20 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {                /*media sekcija header*/
+    header {
+        flex-wrap: wrap;
+        min-height: 4rem;
+        justify-content: center;
+        padding: 5px 10px;
+    }
+
+    #logo-big {
+        height: 80%;
+    }
+}
+
+@media (max-width: 768px) {     /* Boljša prilagoditev main sekcije*/
+    main {
+        min-height: auto;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {    /*rezultat-box in #spin-box*/
+    #rezultat-box,
+    #spin-box {
+        width: 90%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .spinner {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 768px) {  /*Prilagodi gumbe (#spin-button)*/
+    #spin-button {
+        padding: 10px 30px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {        /*Prilagodi footer in sponzorje*/
+    footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        padding: 15px;
+    }
+
+    #nicehash-logo-sponzorji,
+    #bitcoin-logo-sponzorji,
+    #nova-ljubljanska-banka-sponzorji {
+        height: 2.5rem;
+    }
+}
+
+
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #191970;
+}
+/* Zgornja koda samo zapolni bele linije okoli defult bodya*/
+
 header {
     display: flex;
-    justify-content: flex-start; /* Postavi elemente na levo stran */
-    align-items: center; /* Poravnaj elemente navpično na sredino */
-    padding: 10px 20px; /* Doda malo prostora okoli */
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 20px;
     background-color: black;
     height: 5rem;
   }
+
+
+#button-prva-izbira {
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#logo-big {
+    height: 50px; /* Adjust logo size */
+}
+
+#button-prva-izbira:hover {
+    background-color: #cc5500; /* Changes color on hover */
+}
+
 
 main{
     background-color: 	#191970;
 }
 
+
 #logo-big {
     height: 100%; /* Logotip bo imel višino 100% od višine headerja */
     width: auto; /* Ohranimo razmerje slike */
 }
+
 #button-box{
     
     padding: 10px; /*Tukaj sem dodal padding za oba gumba, od skatle z tremi spinnerji*/
@@ -57,6 +152,69 @@ main {
     align-items: center; /* Poravnaj elemente na sredino po širini */
     justify-content: center; /* Poravnaj elemente na sredino po višini */
     height: 100vh; /* Nastavi višino glavnega elementa na celotno višino okna */
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffcc00; /* Zlata barva brez shadowa */
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 3px solid #ffcc00; /* Podčrtaj za poudarek */
+}
+
+/* H2 – Podnaslov */
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1); /* Rahlo prosojna bela za lep kontrast */
+}
+
+#main-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%; /* Da zavzame celotno širino */
+}
+
+
+#index-button-black-jack,
+#index-button-slot-machine{
+    width: 250px; /* Širina gumba */
+    height: 80px; /* Višina gumba */
+    font-size: 24px; /* Velikost pisave */
+    font-weight: bold;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0px 6px 0px #cc5500, 0px 10px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease-in-out;
+    margin: 15px; /* Doda razmik med gumbi */
+}
+
+#index-button-black-jack:hover,
+#index-button-slot-machine:hover {
+    background-color: #cc5500;
+    box-shadow: 0px 4px 0px #b34700, 0px 8px 16px rgba(255, 102, 0, 0.5);
+    transform: scale(1.1);
+}
+
+#index-button-black-jack:active,
+#index-button-slot-machine:active {
+    box-shadow: 0px 2px 0px #993d00, 0px 4px 8px rgba(0, 0, 0, 0.6);
+    transform: scale(0.95);
 }
 
 #rezultat-box {
@@ -108,12 +266,46 @@ main {
     transition: all 0.2s ease-in-out;
 }
 
-footer{
+footer {
     display: flex;
-    justify-content: flex-start; /* Postavi elemente na levo stran */
-    align-items: center; /* Poravnaj elemente navpično na sredino */
-    padding: 10px 20px; /* Doda malo prostora okoli */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px; /* More padding for better spacing */
     background-color: black;
-    height: 5rem;
+    height: auto; /* Let it expand based on content */
 }
 
+#sponzorji-footer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+}
+
+#napis-sponzorji {
+    margin-bottom: 10px;
+    color: aliceblue;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Sponsor logos container */
+#sponzorji-footer-box img {
+    height: 4rem; /* Make all logos the same height */
+    max-width: 100px; /* Prevents logos from getting too big */
+    object-fit: contain; /* Keeps image quality */
+    margin: 0 10px; /* Space between logos */
+}
+
+/* Make logos align horizontally instead of stacking */
+#sponzorji-footer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sponzorji-footer-box img {
+    height: 3.5rem; /* Standardized logo size */
+}
