@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino</title>
+    <title>LESJAK Casinos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,34 +16,11 @@
     </header>
 
     <main>
-        <div id="rezultat-box">
-
+        <div id="game-box"> <!-- Okvir igre -->
+            <h1 id="text-big-main-roll-dice">Roll the Dice 🎲</h1>
+            <div id="dice">🎲</div>
+            <button id="roll-dice-button-roll">🎲 Vrzi kocko!</button>
         </div>
-        <div id="spin-box">
-            <div class="spinner" id="spinner1">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner2">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner3">
-                <span>❌</span>
-            </div>
-        </div>
-        <div id="button-box">
-            <button id="spin-button">
-                Spin
-            </button>
-            <!-- 
-            <button id="reset-button">
-                Reset
-            </button> 
-            -->
-            
-        </div>
-        <span id="test">
-
-        </span>
     </main>
     <footer>
         <div id="sponzorji-footer-box">
@@ -53,7 +30,7 @@
             <img src="pictures/Nova_Ljubljanska_banka_logo.svg.png" alt="nova-ljubljanska-banka-sponzorji" id = "nova-ljubljanska-banka-sponzorji">
         </div>
         </footer>
-    <script src="slot.js"></script>
+    <script src="roll-dice.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>

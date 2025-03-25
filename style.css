@@ -154,7 +154,7 @@ main {
     height: 100vh; /* Nastavi višino glavnega elementa na celotno višino okna */
 }
 
-h1 {
+#big-text-index-welcome-to-lesjak-casino {
     font-size: 48px;
     font-weight: bold;
     color: #ffcc00; /* Zlata barva brez shadowa */
@@ -186,7 +186,7 @@ h2 {
 }
 
 
-#index-button-black-jack,
+#index-button-roll-dice,
 #index-button-slot-machine{
     width: 250px; /* Širina gumba */
     height: 80px; /* Višina gumba */
@@ -204,14 +204,14 @@ h2 {
     margin: 15px; /* Doda razmik med gumbi */
 }
 
-#index-button-black-jack:hover,
+#index-button-roll-dice:hover,
 #index-button-slot-machine:hover {
     background-color: #cc5500;
     box-shadow: 0px 4px 0px #b34700, 0px 8px 16px rgba(255, 102, 0, 0.5);
     transform: scale(1.1);
 }
 
-#index-button-black-jack:active,
+#index-button-roll-dice:active,
 #index-button-slot-machine:active {
     box-shadow: 0px 2px 0px #993d00, 0px 4px 8px rgba(0, 0, 0, 0.6);
     transform: scale(0.95);
@@ -308,4 +308,78 @@ footer {
 
 #sponzorji-footer-box img {
     height: 3.5rem; /* Standardized logo size */
+}
+
+
+
+
+
+
+
+
+
+/*ROLL THE DICE*/
+
+body { 
+    text-align: center; 
+    font-family: Arial, sans-serif; 
+    background-color: #f4f4f4;
+}
+
+#text-big-main-roll-dice {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffcc00; /* Zlata barva brez shadowa */
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 3px solid #ffcc00; /* Podčrtaj za poudarek */
+}
+
+#dice { 
+    font-size: 400px; 
+    display: block;
+    color: gold;
+}
+
+button { 
+    font-size: 20px; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    background-color: gold; 
+    color: black; 
+    border: none; 
+    border-radius: 5px;
+}
+
+button:hover { 
+    background-color: #0056b3; 
+}
+
+#roll-dice-button-roll {
+    width: 250px; /* Širina gumba */
+    height: 80px; /* Višina gumba */
+    font-size: 24px; /* Velikost pisave */
+    font-weight: bold;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0px 6px 0px #cc5500, 0px 10px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease-in-out;
+    margin: 15px; /* Doda razmik med gumbi */
+}
+
+#roll-dice-button-roll:hover {
+    background-color: #cc5500;
+    box-shadow: 0px 4px 0px #b34700, 0px 8px 16px rgba(255, 102, 0, 0.5);
+    transform: scale(1.1);
+}
+
+#roll-dice-button-roll:active {
+    box-shadow: 0px 2px 0px #993d00, 0px 4px 8px rgba(0, 0, 0, 0.6);
+    transform: scale(0.95);
 }
