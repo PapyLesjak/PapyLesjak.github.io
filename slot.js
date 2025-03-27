@@ -3,88 +3,93 @@ const fruits = [
     "🍇", "🍍", "🥭", "🍒", "🍑"
 ];
 
-const resetEmoji = "❌"
-/*
-cons spinTimes = [3, 5, 7]  // Število različnih slik pred končno izbiro
-*/ 
+const resetEmoji = "❌";
+const spinTimes = [3, 5, 7];  // Število različnih slik pred končno izbiro
 
 function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;  //random num
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-document.getElementById("spin-button").addEventListener("click", spin) //tukaj sem nastavil listenerja ki poslusa kdaj je ghumb kliknjen
-
-
-let isButtonDisabled = false;
-
 document.getElementById("spin-button").addEventListener("click", function() {
-    if (isButtonDisabled) return; // Prevent the button from being clicked if it's disabled
+    if (this.disabled) return;
 
-    // Disable the button
-    isButtonDisabled = true;
-    this.disabled = true;
+    this.disabled = true;  // Onemogoči gumb
+    this.style.backgroundColor = "gray"; // Obarvaj v sivo
 
-    // Add a delay of 2 seconds (2000 milliseconds)
-    setTimeout(function() {
-        // Re-enable the button after the delay
-        document.getElementById("spin-button").disabled = false;
-        isButtonDisabled = false; // Dopusti da je gumb spet pritisnjen
-    }, 500);  // 2000ms = 2 sekundi
+    spin();
+
+    setTimeout(() => {
+        this.disabled = false;  // Omogoči gumb nazaj
+        this.style.backgroundColor = ""; // Povrni prvotno barvo (CSS ga bo urejal)
+    }, 2300); // 5s, ker zadnji kolut potrebuje največ časa
 });
 
 
 
-
-/*
-document.getElementById("reset-button").addEventListener("click", reset)
-*/
 function spin() {
+    const spinners = [
+        document.getElementById("spinner1"),
+        document.getElementById("spinner2"),
+        document.getElementById("spinner3")
+    ];
 
-    
-    let spin1 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
-    document.getElementById("spinner1").innerHTML = spin1
+    document.getElementById("rezultat-box").innerHTML = "Vrtenje...";
 
-    let spin2 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
-    document.getElementById("spinner2").innerHTML = spin2
+    let finishedSpins = 0; // Števec zaključenih vrtiljakov
 
-    let spin3 = fruits[getRandomNumber(0, fruits.length - 1)]  //tukaj se shrani mesto v seznamu
-    document.getElementById("spinner3").innerHTML = spin3
+    spinners.forEach((spinner, index) => {
+        let count = 0;
+        let interval = setInterval(() => {
+            spinner.innerHTML = fruits[getRandomNumber(0, fruits.length - 1)];
+            count++;  // Tukaj mora biti count++, ne na začetku
+            
+            if (count >= spinTimes[index]) {
+                clearInterval(interval);
+                
+                setTimeout(() => {
+                    spinner.innerHTML = fruits[getRandomNumber(0, fruits.length - 1)];
+                    finishedSpins++;  // Povečamo števec zaključenih vrtenj
 
-
-
-
-    //  let seznamDobitkov = [spin1, spin2, spin3]
-
-    if (spin1 === spin2 && spin2 === spin3) {                    //preverja ce so veriabli enaki
-        console.log("JACKPOT");  //ZA TESTIRANJE
-        document.getElementById("rezultat-box").innerHTML = "JACKPOT!"
-        iztreliKonfete();
-    } else if (spin1 === spin2 || spin1 === spin3 || spin2 === spin3) {
-        console.log("DVOJČEK");  //ZA TESTIRANJE
-        document.getElementById("rezultat-box").innerHTML = "DVOJČEK"
-    } else {
-        console.log("POSKUSI ŠE ENKRAT");  //ZA TESTIRANJE
-        document.getElementById("rezultat-box").innerHTML = "POSKUSI ŠE ENKRAT"
-        //iztreliKonfete(); //ZA TEST
-    }
-
-    console.log("spinner")
-}
-
-//Funkcija za konfete
-function iztreliKonfete() {
-    confetti({
-        particleCount: 150,  // Število konfetnih delcev
-        spread: 200,          // Razpršenost
-        origin: { y: 0.6 }   // Kje se sproži
+                    if (finishedSpins === spinners.length) {
+                        checkWin(); // Pokliči checkWin ŠELE, KO SO VSI KONČALI
+                    }
+                }, 200); // Počakaj malo po zadnjem prikazanem simbolu
+            }
+        }, 300); // Hitrost animacije (0.4s na sliko)
     });
 }
 
+function checkWin() {
+    let spin1 = document.getElementById("spinner1").innerHTML;
+    let spin2 = document.getElementById("spinner2").innerHTML;
+    let spin3 = document.getElementById("spinner3").innerHTML;
 
+    if (spin1 === spin2 && spin2 === spin3) {
+        console.log("JACKPOT");
+        document.getElementById("rezultat-box").innerHTML = "JACKPOT!";
+        iztreliKonfete();
+    } else if (spin1 === spin2 || spin1 === spin3 || spin2 === spin3) {
+        console.log("DVOJČEK");
+        document.getElementById("rezultat-box").innerHTML = "DVOJČEK";
+    } else {
+        console.log("POSKUSI ŠE ENKRAT");
+        document.getElementById("rezultat-box").innerHTML = "POSKUSI ŠE ENKRAT";
+    }
+}
+
+// Funkcija za konfete
+function iztreliKonfete() {
+    confetti({
+        particleCount: 150,
+        spread: 200,
+        origin: { y: 0.6 }
+    });
+}
+
+// Funkcija za reset
 function reset() {
-    document.getElementById("spinner1").innerHTML = resetEmoji
-
-    document.getElementById("spinner2").innerHTML = resetEmoji
-
-    document.getElementById("spinner3").innerHTML = resetEmoji
+    document.getElementById("spinner1").innerHTML = resetEmoji;
+    document.getElementById("spinner2").innerHTML = resetEmoji;
+    document.getElementById("spinner3").innerHTML = resetEmoji;
+    document.getElementById("rezultat-box").innerHTML = "";
 }
