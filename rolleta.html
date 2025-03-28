@@ -2,41 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Roulette</title>
-    <link rel="stylesheet" href="rolleta.css">
+    <title>Casino</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <header>
-        <img src="pictures/smallest_logo.jpg" alt="logo-big" id = "logo-big">
-        <button onclick="window.location.href='index.html'" id="button-prva-izbira">MENU</button>
-
+    <header id="main-header">
+        <div id="header-content">
+            <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
+            <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
+        </div>
     </header>
-    <div class="balance">Balance: $<span id="balance">1000</span></div>
 
-    <div id="spinner">?</div>
-    <div class="result" id="result"></div>
-    <div class="outcome" id="outcome"></div>
-
-    <div class="controls">
-        <input type="number" id="betAmount" placeholder="Bet amount" min="1">
-        <select id="colorSelect">
-            <option value="red">Red (2x)</option>
-            <option value="black">Black (2x)</option>
-            <option value="green">Green (12x)</option>
-        </select>
-        <button onclick="spin()">Spin</button>
-    </div>
+    <main id="rolleta-main">
+        <div id="rolleta-main-box-for-the-game">
+            <div class="balance">Balance: $<span id="balance">1000</span></div>
+        
+            <div id="spinner">?</div>
+            <div class="result" id="result"></div>
+            <div class="outcome" id="outcome"></div>
+        
+            <div class="controls">
+                <input type="number" id="betAmount" placeholder="Bet amount" min="1">
+                <select id="colorSelect">
+                    <option value="red">Red (2x)</option>
+                    <option value="black">Black (2x)</option>
+                    <option value="green">Green (12x)</option>
+                </select>
+                <button id="rolleta-button" onclick="spin()">Spin</button>
+            </div>
+        </div>
+        
+    </main>
 
     <footer>
-        <div id="sponzorji-footer-box">
-            <h3 id="napis-sponzorji">Sodelovanja:</h3>
-            <img src="pictures/nicehash_logo_sponzorji.jpg" alt="nicehash-logo-sponzorji" id = "nicehash-logo-sponzorji">
-            <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="bitcoin-logo-sponzorji" id = "bitcoin-logo-sponzorji">
-            <img src="pictures/Nova_Ljubljanska_banka_logo.svg.png" alt="nova-ljubljanska-banka-sponzorji" id = "nova-ljubljanska-banka-sponzorji">
+        <div id="footer-content">
+            <div id="sponzorji-footer-box">
+                <div class="sponsors-container">
+                    <img src="pictures/nicehash_logo_sponzorji.jpg" alt="NiceHash Sponzor" class="sponsor-logo">
+                    <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="Bitcoin Sponzor" class="sponsor-logo">
+                    <img src="pictures/ADMIRAL-CASINO-logo.png" alt="Admiral casino sponzor" class="sponsor-logo">
+                </div>
+            </div>
+            <div id="footer-info">
+                <p>© 2025 Lesjak Casino. Created by Aljoša Lesjak.</p>
+            </div>
         </div>
-        </footer>
-
+    </footer>
+    
     <script src="rolleta.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>
