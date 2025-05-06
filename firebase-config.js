@@ -5,7 +5,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCGwEuzsGc05UJ8ABScDtslGo5fO3BoU7w",
+    apiKey: "AIzaSyA1W3EYXqbkLLRhqNbW60iWFD7g28-kV_Y",
     authDomain: "maturitetni-izdelek.firebaseapp.com",
     projectId: "maturitetni-izdelek",
     storageBucket: "maturitetni-izdelek.firebasestorage.app",
