@@ -19,11 +19,9 @@
     <main id="rolleta-main">
         <div id="rolleta-main-box-for-the-game">
             <div class="balance">Balance: $<span id="balance">1000</span></div>
-        
             <div id="spinner">?</div>
             <div class="result" id="result"></div>
             <div class="outcome" id="outcome"></div>
-        
             <div class="controls">
                 <input type="number" id="betAmount" placeholder="Bet amount" min="1">
                 <select id="colorSelect">
@@ -34,7 +32,6 @@
                 <button id="rolleta-button" onclick="spin()">Spin</button>
             </div>
         </div>
-        
     </main>
 
     <footer>
@@ -52,7 +49,7 @@
         </div>
     </footer>
     
-    <script src="rolleta.js"></script>
+    <script type="module" src="rolleta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>

@@ -31,25 +31,86 @@ html, body {
 /* Header Content */
 #header-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Space between the logo and buttons */
+    align-items: center; /* Vertically align items */
     max-width: 1200px; /* Prevents stretching on big screens */
     margin: 0 auto;
+    padding: 0 20px; /* Add padding to the sides */
+}
+
+/* Buttons Container */
+#header-buttons {
+    display: flex;
+    gap: 10px; /* Add spacing between the buttons */
 }
 
 /* Logo */
 #logo-big {
-    height: 70px;/* Logotip bo imel višino 100% od višine headerja */
-    width: auto; 
+    height: 70px; /* Set the height of the logo */
+    width: auto; /* Maintain aspect ratio */
     transition: transform 0.3s ease-in-out;
 }
 
 #logo-big:hover {
-    transform: scale(1.1);
+    transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
 /* Menu Button */
 #header-menu-button {
+    padding: 12px 25px;
+    background-color: #ff6600; /* Orange background */
+    color: white; /* White text */
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#header-menu-button:hover {
+    background-color: #cc5500; /* Darker orange on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Style for the LOGIN button in the header */
+#header-login-button {
+    padding: 10px 20px;
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text */
+    border: none; /* No border */
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+#header-login-button:hover {
+    color: #ff6600; /* Change text color to orange on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Style for the LOGOUT button in the header */
+#header-logout-button {
+    padding: 10px 20px;
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text */
+    border: none; /* No border */
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+#header-logout-button:hover {
+    color: #ff6600; /* Change text color to orange on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Style for the REGISTRATION button in the header */
+#header-registration-button {
     padding: 12px 25px;
     background-color: #ff6600;
     color: white;
@@ -60,13 +121,6 @@ html, body {
     border-radius: 5px;
     transition: background 0.3s ease, transform 0.2s ease;
 }
-
-#header-menu-button:hover {
-    background-color: #cc5500;
-    transform: scale(1.05);
-}
-
-
 
 #button-box{
     
@@ -531,3 +585,114 @@ button:hover {
     margin: 10px;
     color: red;
 }
+
+/*LOGIN CSS*/
+
+/* Center the login and register containers */
+#login-container,
+#register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #222; /* Temno ozadje za casino občutek */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Temnejša senca */
+    text-align: center;
+    color: white; /* Bela barva za besedilo */
+}
+
+/* Form labels and inputs (shared for login and register) */
+#login-form label,
+#register-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffcc00; /* Zlata barva za besedilo */
+}
+
+#login-form input,
+#register-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ffcc00; /* Zlata obroba */
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #333; /* Temno ozadje za vnos */
+    color: white; /* Bela barva za besedilo */
+}
+
+#login-form input::placeholder,
+#register-form input::placeholder {
+    color: #aaa; /* Svetlejša barva za placeholder */
+}
+
+/* Buttons container (shared for login and register) */
+#login-buttons,
+#register-buttons {
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    align-items: center; /* Center the buttons horizontally */
+    gap: 20px; /* Increase spacing between the buttons */
+    margin-top: 15px;
+}
+
+/* Login and Register button styling */
+#login-button,
+#register-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ff6600; /* Oranžna barva za gumb */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 0px #cc5500, 0px 8px 16px rgba(255, 102, 0, 0.5); /* 3D efekt */
+    width: 100%; /* Make the button take full width of the container */
+    max-width: 200px; /* Limit the maximum width */
+    text-align: center;
+}
+
+#login-button:hover,
+#register-button:hover {
+    background-color: #cc5500; /* Temnejša oranžna ob hoverju */
+    transform: scale(1.05); /* Rahlo povečanje ob hoverju */
+}
+
+#login-button:active,
+#register-button:active {
+    background-color: #b34700; /* Temnejša oranžna ob kliku */
+    transform: scale(0.95); /* Klik efekt */
+}
+
+/* Exit button styling (shared for login and register) */
+#exit-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #444; /* Temno siva za manj viden exit gumb */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Make the button take full width of the container */
+    max-width: 200px; /* Limit the maximum width */
+    text-align: center;
+}
+
+#exit-button:hover {
+    background-color: #555; /* Svetlejša siva ob hoverju */
+}
+
+/* Error message styling (shared for login and register) */
+#login-error,
+#register-error {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ff4d4d; /* Svetlo rdeča za napake */
+    display: none; /* Skrito, dokler ni napake */
+}
+

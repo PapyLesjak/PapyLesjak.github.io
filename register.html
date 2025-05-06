@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - LESJAK Casinos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <div id="header-content">
+            <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
+            <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="register-container">
+            <h1>Register for Lesjak Casino</h1>
+            <form id="register-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                
+                <div id="register-buttons">
+                    <button type="submit" id="register-button">Register</button>
+                    <button type="button" id="exit-button" onclick="window.location.href='login.html'">Back to Login</button>
+                </div>
+            </form>
+            <p id="register-error" style="color: red; display: none;">Error creating account. Please try again.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div id="footer-content">
+            <div id="sponsors-section">
+                <div class="sponsors-container">
+                    <img src="pictures/nicehash_logo_sponzorji.jpg" alt="NiceHash Sponsor" class="sponsor-logo">
+                    <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="Bitcoin Sponsor" class="sponsor-logo">
+                    <img src="pictures/ADMIRAL-CASINO-logo.png" alt="Admiral Casino Sponsor" class="sponsor-logo">
+                </div>
+            </div>
+            <div id="footer-info">
+                <p>© 2025 Lesjak Casino. Created by Aljoša Lesjak.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { auth } from "./firebase-config.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        document.getElementById("register-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Account created successfully!");
+                    window.location.href = "login.html"; // Redirect to login page
+                })
+                .catch((error) => {
+                    console.error("Registration error:", error.message);
+                    document.getElementById("register-error").style.display = "block";
+                });
+        });
+    </script>
+</body>
+</html>

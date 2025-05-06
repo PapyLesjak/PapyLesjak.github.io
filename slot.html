@@ -11,8 +11,14 @@
 <body>
     <header id="main-header">
         <div id="header-content">
+            <!-- Logo on the left -->
             <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
-            <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
+
+            <!-- Buttons on the right -->
+            <div id="header-buttons">
+                <button id="header-logout-button">LOGOUT</button>
+                <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
+            </div>
         </div>
     </header>
     
@@ -38,11 +44,12 @@
             <button id="spin-button">
                 Spin
             </button>
-            <!-- 
+            <!--
             <button id="reset-button">
                 Reset
             </button> 
             -->
+          
             
         </div>
         <span id="test">
@@ -64,7 +71,7 @@
         </div>
     </footer>
     
-    <script src="slot.js"></script>
+    <script type="module" src="slot.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>
