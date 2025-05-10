@@ -1,128 +1,142 @@
+// Uvoz Firebase modulov
 import { auth, db } from "./firebase-config.js";
 import { doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-let userDocRef; // Reference to the user's Firestore document
-let balance; // User's balance (undefined if not logged in)
+let userDocRef; // Referenca na Firestore dokument uporabnika
+let balance; // Trenutno stanje uporabnikovega računa
 
-// Update balance display on the screen
+// Posodobi prikaz stanja na zaslonu
 function updateBalance() {
     const balanceElement = document.getElementById('balance');
     if (balanceElement) {
-        balanceElement.textContent = balance !== undefined ? balance : "Not logged in";
+        balanceElement.textContent = balance !== undefined ? balance : "Not logged in"; // Prikaz stanja ali obvestilo
     }
 }
 
-// Fetch user balance from Firestore
+// Pridobi stanje uporabnika iz Firestore
 async function fetchBalance() {
     const userDoc = await getDoc(userDocRef);
     if (userDoc.exists()) {
-        balance = userDoc.data().balance;
+        balance = userDoc.data().balance; // Nastavi stanje iz Firestore
     } else {
-        // Initialize user balance in Firestore
-        balance = 1000; // Default balance
+        // Inicializiraj stanje uporabnika v Firestore
+        balance = 1000; // Privzeto stanje
         await setDoc(userDocRef, { balance });
     }
-    updateBalance();
+    updateBalance(); // Posodobi prikaz stanja
 }
 
-// Get random roulette result
+// Pridobi naključni rezultat rulete
 function getResult() {
-    const random = Math.random(); // Generate random number between 0 and 1
-    if (random < 0.49) return 'black'; // 49% chance for black
-    if (random < 0.98) return 'red';   // 49% chance for red
-    return 'green';                    // 2% chance for green
+    const random = Math.random(); // Ustvari naključno število med 0 in 1
+    if (random < 0.49) return 'black'; // 49% možnost za črno
+    if (random < 0.98) return 'red';   // 49% možnost za rdečo
+    return 'green';                    // 2% možnost za zeleno
 }
 
-// Handle roulette spin
+// Obdelava vrtenja rulete
 async function spin() {
-    const spinButton = document.getElementById('rolleta-button'); // Spin button
-    const betInput = document.getElementById('betAmount'); // Input for bet amount
-    const colorSelect = document.getElementById('colorSelect'); // Color selection
-    const spinner = document.getElementById('spinner'); // Spinner element
-    const resultDiv = document.getElementById('result'); // Result display
-    const outcomeDiv = document.getElementById('outcome'); // Outcome display
+    const spinButton = document.getElementById('rolleta-button'); // Gumb za vrtenje
+    const betInput = document.getElementById('betAmount'); // Polje za vnos stave
+    const colorSelect = document.getElementById('colorSelect'); // Izbira barve
+    const spinner = document.getElementById('spinner'); // Element za prikaz vrtenja
+    const resultDiv = document.getElementById('result'); // Prikaz rezultata
+    const outcomeDiv = document.getElementById('outcome'); // Prikaz izida
 
-    const betAmount = parseInt(betInput.value); // Convert bet amount to integer
-    const selectedColor = colorSelect.value; // Get selected color
+    const betAmount = parseInt(betInput.value); // Pretvori vneseno stavo v celo število
+    const selectedColor = colorSelect.value; // Pridobi izbrano barvo
 
-    // Validate bet amount
+    // Preveri veljavnost stave
     if (!betAmount || betAmount <= 0) {
-        outcomeDiv.textContent = 'Enter a valid bet amount';
+        outcomeDiv.textContent = 'Enter a valid bet amount'; // Obvestilo o neveljavni stavi
         return;
     }
 
-    // Check if the user has enough balance
+    // Preveri, ali ima uporabnik dovolj stanja
     if (betAmount > balance) {
-        outcomeDiv.textContent = 'Not enough balance';
+        outcomeDiv.textContent = 'Not enough balance'; // Obvestilo o pomanjkanju sredstev
         return;
     }
 
-    // Disable the spin button to prevent multiple clicks
+    // Onemogoči gumb za vrtenje, da prepreči večkratne klike
     spinButton.disabled = true;
 
-    // Deduct bet amount from balance
+    // Odštej stavo od stanja
     balance -= betAmount;
     updateBalance();
 
-    // Show spinning animation
-    let colors = ['red', 'black', 'green']; // Roulette colors
+    // Prikaži animacijo vrtenja
+    let colors = ['red', 'black', 'green']; // Barve rulete
     let index = 0;
     spinner.textContent = '';
     resultDiv.textContent = 'Spinning...';
     outcomeDiv.textContent = '';
 
     let spinInterval = setInterval(() => {
-        spinner.style.backgroundColor = colors[index]; // Change spinner color
-        index = (index + 1) % colors.length; // Cycle through colors
+        spinner.style.backgroundColor = colors[index]; // Spremeni barvo vrtenja
+        index = (index + 1) % colors.length; // Ciklično prehajaj med barvami
     }, 100);
 
-    // Stop spinning and show result after a delay
+    // Ustavi vrtenje in prikaži rezultat po zakasnitvi
     setTimeout(async () => {
         clearInterval(spinInterval);
 
-        // Get spin result
+        // Pridobi rezultat vrtenja
         const result = getResult();
 
-        // Stop animation and show result
+        // Ustavi animacijo in prikaži rezultat
         spinner.style.backgroundColor = result;
         spinner.textContent = result;
         resultDiv.textContent = `The roulette landed on ${result}`;
 
-        // Calculate winnings
+        // Izračunaj dobitke
         if (result === selectedColor) {
-            const multiplier = result === 'green' ? 12 : 2; // Multiplier for green or other colors
-            const winnings = betAmount * multiplier; // Calculate winnings
-            balance += winnings; // Add winnings to balance
+            const multiplier = result === 'green' ? 12 : 2; // Množitelj za zeleno ali druge barve
+            const winnings = betAmount * multiplier; // Izračunaj dobitke
+            balance += winnings; // Dodaj dobitke k stanju
             outcomeDiv.textContent = `You won ${winnings}!`;
-            outcomeDiv.style.color = 'green'; // Show green color for win
+            outcomeDiv.style.color = 'green'; // Prikaz zelene barve za zmago
         } else {
             outcomeDiv.textContent = 'Better luck next time!';
-            outcomeDiv.style.color = 'red'; // Show red color for loss
+            outcomeDiv.style.color = 'red'; // Prikaz rdeče barve za poraz
         }
 
-        // Update balance in Firestore
+        // Posodobi stanje v Firestore
         await updateDoc(userDocRef, { balance });
         updateBalance();
 
-        // Re-enable the spin button after the spin is complete
+        // Ponovno omogoči gumb za vrtenje po zaključku
         spinButton.disabled = false;
-    }, 2000); // Spin duration
+    }, 2000); // Trajanje vrtenja
 }
 
-// Firebase Authentication and Firestore Integration
+// Firebase avtentikacija in integracija s Firestore
 auth.onAuthStateChanged(async (user) => {
     if (user) {
         const userId = user.uid;
         userDocRef = doc(db, "users", userId);
 
-        // Fetch user balance from Firestore
+        // Pridobi stanje uporabnika iz Firestore
         await fetchBalance();
     } else {
-        // Redirect to login page if the user is not logged in
+        // Preusmeri na stran za prijavo, če uporabnik ni prijavljen
         alert("You need to log in to play!");
         window.location.href = "login.html";
     }
 });
 
-// Attach the spin function to the global window object
+// Add event listener for the LOGOUT button
+document.getElementById("header-logout-button").addEventListener("click", () => {
+    signOut(auth)
+        .then(() => {
+            alert("You have been logged out."); // Notify the user
+            window.location.href = "login.html"; // Redirect to the login page
+        })
+        .catch((error) => {
+            console.error("Error logging out:", error); // Log any errors
+        });
+});
+
+// Poveži funkcijo spin z globalnim objektom window
 window.spin = spin;

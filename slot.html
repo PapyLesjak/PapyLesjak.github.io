@@ -11,67 +11,60 @@
 <body>
     <header id="main-header">
         <div id="header-content">
-            <!-- Logo on the left -->
+            <!-- Logotip na levi strani -->
             <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
 
-            <!-- Buttons on the right -->
+            <!-- Gumbi na desni strani -->
             <div id="header-buttons">
+                <!-- Gumb za odjavo -->
                 <button id="header-logout-button">LOGOUT</button>
+                <!-- Gumb za vrnitev na glavno stran -->
                 <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
             </div>
         </div>
     </header>
     
     <main>
+        <!-- Prikaz trenutnega stanja uporabnikovega računa -->
         <div id="slot-balance">
             <div id="balance-box">Balance: $<span id="balance">100</span></div>
         </div>
-        <div id="rezultat-box">
-
-        </div>
+        <!-- Prikaz rezultata igre -->
+        <div id="rezultat-box"></div>
+        <!-- Prikaz vrtečih se simbolov -->
         <div id="spin-box">
-            <div class="spinner" id="spinner1">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner2">
-                <span>❌</span>
-            </div>
-            <div class="spinner" id="spinner3">
-                <span>❌</span>
-            </div>
+            <div class="spinner" id="spinner1"><span>❌</span></div>
+            <div class="spinner" id="spinner2"><span>❌</span></div>
+            <div class="spinner" id="spinner3"><span>❌</span></div>
         </div>
+        <!-- Gumbi za upravljanje igre -->
         <div id="button-box">
-            <button id="spin-button">
-                Spin
-            </button>
-            <!--
-            <button id="reset-button">
-                Reset
-            </button> 
-            -->
-          
-            
+            <!-- Gumb za začetek vrtenja -->
+            <button id="spin-button">Spin</button>
         </div>
-        <span id="test">
-
-        </span>
+        <!-- Testno polje za prikaz podatkov -->
+        <span id="test"></span>
     </main>
     <footer>
         <div id="footer-content">
             <div id="sponzorji-footer-box">
                 <div class="sponsors-container">
+                    <!-- Logotipi sponzorjev -->
                     <img src="pictures/nicehash_logo_sponzorji.jpg" alt="NiceHash Sponzor" class="sponsor-logo">
                     <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="Bitcoin Sponzor" class="sponsor-logo">
                     <img src="pictures/ADMIRAL-CASINO-logo.png" alt="Admiral casino sponzor" class="sponsor-logo">
                 </div>
             </div>
             <div id="footer-info">
+                <!-- Informacije o avtorskih pravicah -->
                 <p>© 2025 Lesjak Casino. Created by Aljoša Lesjak.</p>
             </div>
         </div>
     </footer>
     
+    <!-- Povezava na glavno skripto za igralni avtomat -->
     <script type="module" src="slot.js"></script>
+    <!-- Knjižnica za konfete -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>

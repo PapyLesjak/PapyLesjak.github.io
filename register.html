@@ -9,26 +9,34 @@
 <body>
     <header id="main-header">
         <div id="header-content">
+            <!-- Logotip na levi strani -->
             <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
+            <!-- Gumb za vrnitev na glavno stran -->
             <button onclick="window.location.href='index.html'" id="header-menu-button">MENU</button>
         </div>
     </header>
 
     <main>
         <div id="register-container">
+            <!-- Naslov za registracijo -->
             <h1>Register for Lesjak Casino</h1>
+            <!-- Obrazec za registracijo -->
             <form id="register-form">
+                <!-- Polje za vnos e-pošte -->
                 <label for="email">Email:</label>
                 <input type="email" id="email" placeholder="Enter your email" required>
                 
+                <!-- Polje za vnos gesla -->
                 <label for="password">Password:</label>
                 <input type="password" id="password" placeholder="Enter your password" required>
                 
+                <!-- Gumbi za registracijo in vrnitev na prijavo -->
                 <div id="register-buttons">
                     <button type="submit" id="register-button">Register</button>
                     <button type="button" id="exit-button" onclick="window.location.href='login.html'">Back to Login</button>
                 </div>
             </form>
+            <!-- Prikaz napake pri registraciji -->
             <p id="register-error" style="color: red; display: none;">Error creating account. Please try again.</p>
         </div>
     </main>
@@ -37,35 +45,43 @@
         <div id="footer-content">
             <div id="sponsors-section">
                 <div class="sponsors-container">
+                    <!-- Logotipi sponzorjev -->
                     <img src="pictures/nicehash_logo_sponzorji.jpg" alt="NiceHash Sponsor" class="sponsor-logo">
                     <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="Bitcoin Sponsor" class="sponsor-logo">
                     <img src="pictures/ADMIRAL-CASINO-logo.png" alt="Admiral Casino Sponsor" class="sponsor-logo">
                 </div>
             </div>
             <div id="footer-info">
+                <!-- Informacije o avtorskih pravicah -->
                 <p>© 2025 Lesjak Casino. Created by Aljoša Lesjak.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Skripta za registracijo uporabnika -->
     <script type="module">
+        // Uvoz Firebase konfiguracije in funkcije za registracijo
         import { auth } from "./firebase-config.js";
         import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+        // Obdelava oddaje obrazca za registracijo
         document.getElementById("register-form").addEventListener("submit", (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Prepreči osvežitev strani
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value; // Pridobi e-poštni naslov
+            const password = document.getElementById("password").value; // Pridobi geslo
 
+            // Ustvari novega uporabnika z e-pošto in geslom
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
+                    // Uspešna registracija
                     alert("Account created successfully!");
-                    window.location.href = "login.html"; // Redirect to login page
+                    window.location.href = "login.html"; // Preusmeri na stran za prijavo
                 })
                 .catch((error) => {
+                    // Obdelava napak pri registraciji
                     console.error("Registration error:", error.message);
-                    document.getElementById("register-error").style.display = "block";
+                    document.getElementById("register-error").style.display = "block"; // Prikaži napako
                 });
         });
     </script>

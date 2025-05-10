@@ -11,12 +11,14 @@
 <body>
     <header id="main-header">
         <div id="header-content">
-            <!-- Logo on the left -->
+            <!-- Logotip na levi strani -->
             <img src="pictures/smallest_logo.jpg" alt="Lesjak Casino Logo" id="logo-big">
 
-            <!-- Buttons on the right -->
+            <!-- Gumbi na desni strani -->
             <div id="header-buttons">
+                <!-- Gumb za prijavo -->
                 <button onclick="window.location.href='login.html'" id="header-login-button">LOGIN</button>
+                <!-- Gumb za registracijo -->
                 <button onclick="window.location.href='register.html'" id="header-registration-button">REGISTER</button>
             </div>
         </div>
@@ -24,32 +26,39 @@
 
     <main>
         <div>
-            <!--<img src="pictures/casino_girl_red.png" alt="casino_girl" id = "casino_girl">-->
+            <!-- Glavni naslov dobrodošlice -->
             <h1 id="big-text-index-welcome-to-lesjak-casino">WELCOME TO LESJAK CASINO!</h1>
+            <!-- Podnaslov za izbiro igre -->
             <h2>CHOOSE A GAME:</h2>
             <div id="main-button-container">
-                <!--<button onclick="window.location.href='roll-dice.html'" id="index-button-roll-dice">Roll the dice</button>-->
+                <!-- Gumb za igralni avtomat -->
                 <button onclick="window.location.href='slot.html'" id="index-button-slot-machine">Slot machine</button>
+                <!-- Gumb za ruleto -->
                 <button onclick="window.location.href='rolleta.html'" id="index-button-rolleta">Rolleta</button>
             </div>
         </div>
-        
     </main>
+
     <footer>
         <div id="footer-content">
             <div id="sponzorji-footer-box">
                 <div class="sponsors-container">
+                    <!-- Logotipi sponzorjev -->
                     <img src="pictures/nicehash_logo_sponzorji.jpg" alt="NiceHash Sponsor" class="sponsor-logo">
                     <img src="pictures/Bitcoin_logo_sponzorji.svg.png" alt="Bitcoin Sponsor" class="sponsor-logo">
                     <img src="pictures/ADMIRAL-CASINO-logo.png" alt="Admiral casino sponzor" class="sponsor-logo">
                 </div>
             </div>
             <div id="footer-info">
+                <!-- Informacije o avtorskih pravicah -->
                 <p>© 2025 Lesjak Casino. Created by Aljoša Lesjak.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Glavna skripta -->
     <script src="script.js"></script>
+    <!-- Knjižnica za konfete -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 </body>
 </html>
