@@ -1,69 +1,69 @@
-// Import Firebase modules
+// Uvoz Firebase modulov
 import { auth, db } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-// Slot machine symbols
+// Simboli za igralni avtomat
 const fruits = [
-    "🍎", "🍌", "🍊", "🍉", "🍓", // Symbols for the slot machine
+    "🍎", "🍌", "🍊", "🍉", "🍓", // Simboli za igralni avtomat
     "🍇", "🍍", "🥭", "🍒", "🍑"
 ];
 
-const resetEmoji = "❌"; // Reset symbol
-const spinTimes = [7, 10, 13]; // Number of spins for each reel
-const spinCost = 10; // Cost of a spin
+const resetEmoji = "❌"; // Simbol za ponastavitev
+const spinTimes = [7, 10, 13]; // Število vrtenj za vsak kolut
+const spinCost = 10; // Cena enega vrtenja
 
-let userDocRef; // Reference to the user's Firestore document
-let balance = 0; // User's balance
+let userDocRef; // Referenca na Firestore dokument uporabnika
+let balance = 0; // Trenutno stanje uporabnikovega računa
 
-// Fetch the user's balance from Firestore
+// Pridobi stanje uporabnika iz Firestore
 async function fetchBalance() {
     const userDoc = await getDoc(userDocRef);
     if (userDoc.exists()) {
-        balance = userDoc.data().balance; // Set balance from Firestore
-        updateBalance(); // Update balance display
+        balance = userDoc.data().balance; // Nastavi stanje iz Firestore
+        updateBalance(); // Posodobi prikaz stanja
     } else {
-        console.error("User document does not exist!");
+        console.error("Dokument uporabnika ne obstaja!");
     }
 }
 
-// Save the user's balance to Firestore
+// Shrani stanje uporabnika v Firestore
 async function saveBalance() {
     if (userDocRef) {
         await updateDoc(userDocRef, { balance });
     }
 }
 
-// Update balance display on the screen
+// Posodobi prikaz stanja na zaslonu
 function updateBalance() {
     document.getElementById('balance').innerText = balance;
 }
 
-// Handle spin button click
+// Obdelava klika na gumb za vrtenje
 document.getElementById("spin-button").addEventListener("click", async function () {
     const resultBox = document.getElementById("rezultat-box");
-    resultBox.textContent = "Spinning..."; // Show spinning message
+    resultBox.textContent = "Vrtenje..."; // Prikaz sporočila o vrtenju
 
     if (this.disabled || balance < spinCost) {
-        resultBox.textContent = "Not enough balance!";
+        resultBox.textContent = "Premalo stanja!";
         return;
     }
 
-    balance -= spinCost; // Deduct spin cost
-    updateBalance(); // Update balance display
-    await saveBalance(); // Save updated balance to Firestore
+    balance -= spinCost; // Odštej ceno vrtenja
+    updateBalance(); // Posodobi prikaz stanja
+    await saveBalance(); // Shrani posodobljeno stanje v Firestore
 
-    this.disabled = true; // Disable the button during the spin
-    this.style.backgroundColor = "gray"; // Change button color to gray
+    this.disabled = true; // Onemogoči gumb med vrtenjem
+    this.style.backgroundColor = "gray"; // Spremeni barvo gumba v sivo
 
     spin(async () => {
-        this.disabled = false; // Re-enable the button after the spin
-        this.style.backgroundColor = ""; // Reset button color
-        await saveBalance(); // Save updated balance after the spin
+        this.disabled = false; // Ponovno omogoči gumb po vrtenju
+        this.style.backgroundColor = ""; // Ponastavi barvo gumba
+        await saveBalance(); // Shrani posodobljeno stanje po vrtenju
     });
 });
 
-// Spin function
+// Funkcija za vrtenje kolutov
 function spin(callback) {
     const spinners = [
         document.getElementById("spinner1"),
@@ -87,8 +87,8 @@ function spin(callback) {
                     finishedSpins++;
 
                     if (finishedSpins === spinners.length) {
-                        checkWin(); // Check the result after all reels stop
-                        callback(); // Re-enable the spin button
+                        checkWin(); // Preveri rezultat po zaključku vrtenja
+                        callback(); // Ponovno omogoči gumb za vrtenje
                     }
                 }, 200);
             }
@@ -96,12 +96,12 @@ function spin(callback) {
     });
 }
 
-// Generate a random number
+// Generiraj naključno število
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Check the result of the spin
+// Preveri rezultat vrtenja
 function checkWin() {
     let spin1 = document.getElementById("spinner1").innerHTML;
     let spin2 = document.getElementById("spinner2").innerHTML;
@@ -111,25 +111,25 @@ function checkWin() {
     const resultBox = document.getElementById("rezultat-box");
 
     if (spin1 === spin2 && spin2 === spin3) {
-        // Jackpot (all symbols match)
+        // Jackpot (vsi simboli se ujemajo)
         winAmount = spinCost * 10;
         resultBox.textContent = "JACKPOT!";
-        iztreliKonfete(); // Show confetti for jackpot
+        iztreliKonfete(); // Prikaži konfete za jackpot
     } else if (spin1 === spin2 || spin1 === spin3 || spin2 === spin3) {
-        // Pair (two symbols match)
+        // Par (dva simbola se ujemata)
         winAmount = spinCost * 2;
-        resultBox.textContent = "You got a pair!";
+        resultBox.textContent = "Imate par!";
     } else {
-        // No win
-        resultBox.textContent = "Better luck next time!";
+        // Brez zmage
+        resultBox.textContent = "Več sreče prihodnjič!";
     }
 
-    // Update balance based on winnings
+    // Posodobi stanje glede na dobitke
     balance += winAmount;
-    updateBalance(); // Update balance display
+    updateBalance(); // Posodobi prikaz stanja
 }
 
-// Show confetti for jackpot
+// Prikaži konfete za jackpot
 function iztreliKonfete() {
     confetti({
         particleCount: 150,
@@ -138,7 +138,7 @@ function iztreliKonfete() {
     });
 }
 
-// Firebase authentication and Firestore integration
+// Firebase avtentikacija in integracija s Firestore
 auth.onAuthStateChanged(async (user) => {
     const spinButton = document.getElementById("spin-button");
 
@@ -146,33 +146,33 @@ auth.onAuthStateChanged(async (user) => {
         const userId = user.uid;
         userDocRef = doc(db, "users", userId);
 
-        // Fetch the user's balance from Firestore
+        // Pridobi stanje uporabnika iz Firestore
         await fetchBalance();
 
-        // Enable the spin button
+        // Omogoči gumb za vrtenje
         if (spinButton) {
             spinButton.disabled = false;
         }
     } else {
-        // Redirect to login page if the user is not logged in
-        alert("You need to log in to play!");
+        // Preusmeri na stran za prijavo, če uporabnik ni prijavljen
+        alert("Za igranje se morate prijaviti!");
         window.location.href = "login.html";
 
-        // Disable the spin button
+        // Onemogoči gumb za vrtenje
         if (spinButton) {
             spinButton.disabled = true;
         }
     }
 });
 
-// Add event listener for the LOGOUT button
+// Dodaj poslušalca dogodkov za gumb za odjavo
 document.getElementById("header-logout-button").addEventListener("click", () => {
     signOut(auth)
         .then(() => {
-            alert("You have been logged out."); // Notify the user
-            window.location.href = "login.html"; // Redirect to the login page
+            alert("Uspešno ste se odjavili."); // Obvestilo o odjavi
+            window.location.href = "login.html"; // Preusmeri na stran za prijavo
         })
         .catch((error) => {
-            console.error("Error logging out:", error); // Log any errors
+            console.error("Napaka pri odjavi:", error); // Prikaz napake pri odjavi
         });
 });
