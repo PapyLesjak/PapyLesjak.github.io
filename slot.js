@@ -121,10 +121,10 @@ function checkWin() {
     } else if (spin1 === spin2 || spin1 === spin3 || spin2 === spin3) {
         // Par (dva simbola se ujemata)
         winAmount = spinCost * 2;
-        resultBox.textContent = "Imate par!";
+        resultBox.textContent = "Pair!";
     } else {
         // Brez zmage
-        resultBox.textContent = "Več sreče prihodnjič!";
+        resultBox.textContent = "Try again!";
     }
 
     // Posodobi stanje glede na dobitke
