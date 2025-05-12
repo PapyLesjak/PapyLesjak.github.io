@@ -3,6 +3,8 @@ import { auth, db } from "./firebase-config.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+let isSpinning = false; // Dodano za preprečevanje večkratnega vrtenja
+
 // Simboli za igralni avtomat
 const fruits = [
     "🍎", "🍌", "🍊", "🍉", "🍓", // Simboli za igralni avtomat
@@ -39,27 +41,28 @@ function updateBalance() {
     document.getElementById('balance').innerText = balance;
 }
 
-// Obdelava klika na gumb za vrtenje
-document.getElementById("spin-button").addEventListener("click", async function () {
+// Posodobljena funkcija za vrtenje brez loading zaslona
+document.getElementById("spin-button").addEventListener("click", async function() {
+    if (isSpinning) return; // Prepreči večkratno vrtenje
+    
     const resultBox = document.getElementById("rezultat-box");
-    resultBox.textContent = "Vrtenje..."; // Prikaz sporočila o vrtenju
-
+    
     if (this.disabled || balance < spinCost) {
         resultBox.textContent = "Premalo stanja!";
         return;
     }
 
-    balance -= spinCost; // Odštej ceno vrtenja
-    updateBalance(); // Posodobi prikaz stanja
-    await saveBalance(); // Shrani posodobljeno stanje v Firestore
-
-    this.disabled = true; // Onemogoči gumb med vrtenjem
-    this.style.backgroundColor = "gray"; // Spremeni barvo gumba v sivo
+    isSpinning = true;
+    this.disabled = true;
+    
+    balance -= spinCost;
+    updateBalance();
+    await saveBalance();
 
     spin(async () => {
-        this.disabled = false; // Ponovno omogoči gumb po vrtenju
-        this.style.backgroundColor = ""; // Ponastavi barvo gumba
-        await saveBalance(); // Shrani posodobljeno stanje po vrtenju
+        this.disabled = false;
+        isSpinning = false;
+        await saveBalance();
     });
 });
 
@@ -140,28 +143,27 @@ function iztreliKonfete() {
 
 // Firebase avtentikacija in integracija s Firestore
 auth.onAuthStateChanged(async (user) => {
+    const loadingScreen = document.getElementById('loading-screen');
     const spinButton = document.getElementById("spin-button");
 
     if (user) {
-        const userId = user.uid;
-        userDocRef = doc(db, "users", userId);
-
-        // Pridobi stanje uporabnika iz Firestore
-        await fetchBalance();
-
-        // Omogoči gumb za vrtenje
-        if (spinButton) {
-            spinButton.disabled = false;
+        try {
+            const userId = user.uid;
+            userDocRef = doc(db, "users", userId);
+            await fetchBalance(); // Počakaj da se naloži balance
+            loadingScreen.style.display = 'none'; // Skrij loading zaslon ko so podatki naloženi
+            
+            if (spinButton) {
+                spinButton.disabled = false;
+            }
+        } catch (error) {
+            console.error("Error loading data:", error);
+            alert("Error loading game data. Please try again.");
+            window.location.href = "index.html";
         }
     } else {
-        // Preusmeri na stran za prijavo, če uporabnik ni prijavljen
-        alert("Za igranje se morate prijaviti!");
+        alert("You need to log in to play!");
         window.location.href = "login.html";
-
-        // Onemogoči gumb za vrtenje
-        if (spinButton) {
-            spinButton.disabled = true;
-        }
     }
 });
 
