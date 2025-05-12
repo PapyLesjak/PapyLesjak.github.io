@@ -129,7 +129,7 @@ function checkWin() {
 
     // Posodobi stanje glede na dobitke
     balance += winAmount;
-    updateBalance(); // Posodobi prikaz stanja
+    updateBalance(); // Posodobi prikaz stanjas
 }
 
 // Prikaži konfete za jackpot
